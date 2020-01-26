@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Calculadora</title>
+    <meta charset="utf-8">
+    <style typw="text/case">
+        body {
+            position: absolute;
+            width: 370px;
+            height: 600px;
+            margin-left: 10px auto;
+        }
+
+        #calculadora {
+            border: 1px solid rgb(77, 74, 74);
+            background-color: rgb(180, 205, 206);
+            width: 96%;
+            height: 97%;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 5px;
+        }
+
+        button {
+            width: 22%;
+            height: 86px;
+            margin: 3px;
+            border-radius: 46px;
+            border-style: none;
+            font-size: 35pt;
+        }
+
+        #display {
+            width: 88%;
+            height: 11%;
+            font-size: 45pt;
+            overflow: hidden;
+            border-radius: 12px;
+            padding: 20px;
+        }
+    </style>
+    <script type="text/javascript">
+        var numDisplay = "";
+        var numero = "";
+        var termos = [undefined, undefined, undefined];
+        var resultado = undefined;
+
+        function pressNum(num) {
+            numero = numero.concat(num.innerHTML);
+            exibirTela(num.innerHTML);
+        }
+
+        function pressionaOperador(op) {
+            if (termos[1] == undefined) {
+                termos[0] = numero;
+                termos[1] = op.innerHTML;
+                exibirTela(op.innerHTML);
+                numero = "";
+            }
+            // fora da condição nada acontece
+        }
+
+        function pressEqual() {
+            if (termos[0] != undefined && termos[1] != undefined && numero != "") {
+                termos[2] = numero;
+                var manterNumero;
+                switch (termos[1]) {
+                    case '+':
+                        resultado = Number(termos[0]) + Number(termos[2]);
+                        break;
+
+                    case '-':
+                        resultado = Number(termos[0]) - Number(termos[2]);
+                        break;
+
+                    case '*':
+                        resultado = Number(termos[0]) * Number(termos[2]);
+                        break;
+
+                    case '/':
+                        resultado = Number(termos[0]) / Number(termos[2]);
+                        break;
+                }
+                manterNumero = resultado;
+                limparTela();
+                exibirTela(resultado);
+                limparMemoria();
+                numero = manterNumero.toString();
+            }
+        }
+
+        function limparMemoria() {
+            numero = "";
+            termos = [undefined, undefined, undefined];
+            resultado = undefined;
+        }
+
+        function limparTela() {
+            numDisplay = "";
+            var tela = document.getElementById('display');
+            tela.value = numDisplay;
+        }
+        function LimparTudo() {
+            limparTela();
+            limparMemoria();
+        }
+        function exibirTela(conteudo) {
+            numDisplay = numDisplay.concat(conteudo);
+            var tela = document.getElementById('display');
+            tela.value = numDisplay;
+        }
+
+
+
+    </script>
+</head>
+
+<body>
+    <div id="calculadora">
+        <textarea id="display" disabled rows="1"></textarea>
+        <div>
+            <button id="limpatela" onclick="LimparTudo()" style="width: 166px; 
+            background-color:salmon;">AC</button>
+            <button onclick="pressionaOperador(this)">/</button>
+            <button onclick="pressionaOperador(this)">*</button>
+
+
+        </div>
+
+        <div>
+            <button onclick="pressNum(this)">7</button>
+            <button onclick="pressNum(this)">8</button>
+            <button onclick="pressNum(this)">9</button>
+            <button onclick="pressionaOperador(this)">+</button>
+        </div>
+
+        <div>
+            <button onclick="pressNum(this)">4</button>
+            <button onclick="pressNum(this)">5</button>
+            <button onclick="pressNum(this)">6</button>
+            <button onclick="pressionaOperador(this)">-</button>
+        </div>
+
+        <div>
+            <button onclick="pressNum(this)">1</button>
+            <button onclick="pressNum(this)">2</button>
+            <button onclick="pressNum(this)">3</button>
+            <button onclick="pressNum(this)">.</button>
+
+        </div>
+
+        <button onclick="pressNum(this)">0</button>
+        <button id="igualdade" onclick="pressEqual()" style="width: 250px; 
+        background-color:salmon;">=</button>
+
+    </div>
+</body>
+
+</html>
